@@ -1,6 +1,13 @@
 #Code Book for tidy dataset
+wich scritp "run_analysis.R" return
 
 ##Variables
+
+Subject
+	Sequence number of volunteer in the group within an age bracket of 19-48 years
+	
+Activity
+	
 
 ##Transformations
 

@@ -21,34 +21,41 @@ run_analysis <- function(pathname = "") {
         stest <- read.table(paste(path, "test/subject_test.txt", sep = ""))
         strain <- read.table(paste(path, "train/subject_train.txt", sep = ""))
         actlabels <- read.table(paste(path, "activity_labels.txt", sep = ""))
+        features <- read.table(paste(path, "features.txt", sep = ""))
         
 ## 1. Merging the training and the test sets to create one data set
         
-        X <- rbind(xtest, xtrain)
-        Y <- rbind(ytest, ytrain)
-        S <- rbind(stest, strain)
-        
+        X <- rbind(xtest, xtrain) 
+
 ## 2. Extracting only the measurements on the mean and standard deviation 
-## for each measurement. 
+## for each measurement and naming variables. 
         
-        DataSet<- data.frame(Y, S, rowMeans(X), apply(X, 1, sd))
+        m <- grep("mean()", features[, 2], fixed = TRUE)
+        s <- grep("std()", features[, 2], fixed = TRUE)
+        ext <- sort(c(m, s))
         
-## 3. Naming the activities in the data set
+        X <- X[, ext]
+        names(X) <- features[ext, 2]
+        
+## 3. Merging activities with dataset and naming the activities in it
 
-        DataSet <- merge(DataSet, actlabels, sort = FALSE)
-                
-## 4. Subsetting, sorting and naming columns (variables)
+        Y <- rbind(ytest, ytrain)
+        A <- actlabels$V2[Y$V1]
+        DS <- cbind(Activity=A, X)
 
-        DataSet <- DataSet[, c(2, 5, 3, 4)]
-        names(DataSet) <- c("Subject", "Activity", "Mean", "SD")
+## 4. Naming columns (variables) of DataSet
+
+        
+        #DataSet <- DataSet[, c(2, 5, 3, 4)]
+        #names(DataSet) <- c("Subject", "Activity", "Mean", "SD")
         
 ## 5. Creating a second, independent tidy data set with the average 
 ## of each variable for each activity and each subject
-
-        RES <- group_by(DataSet, Subject, Activity)
-        RES <- summarize(RES, Average.of.Means = mean(Mean), Average.of.SDs = mean(SD))
+        
+        #RES <- group_by(DataSet, Subject, Activity)
+        #RES <- summarize(RES, Average.of.Means = mean(Mean), Average.of.SDs = mean(SD))
                 
 ## Result
 
-        RES
+        DS
 }
