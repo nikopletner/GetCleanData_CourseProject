@@ -10,8 +10,7 @@
 run_analysis <- function(pathname = "") {
         
         library(dplyr)
-        library(reshape2)
-        
+
 ## 0. Getting data
 
         path <- paste(pathname, "UCI HAR Dataset/", sep = "")
@@ -37,7 +36,7 @@ run_analysis <- function(pathname = "") {
         
         X <- X[, ext]
                 
-## 3. Merging subjects and activities with dataset and naming the activities in it
+## 3. Merging subjects and activities with dataset and naming the activities in it.
 
         Y <- rbind(ytest, ytrain)       # activity numbers
         S <- rbind(stest, strain)       # subject
@@ -50,7 +49,7 @@ run_analysis <- function(pathname = "") {
         names(DS) <- col_names
 
 ## 5. Creating a second, independent tidy data set with the average 
-## of each variable for each activity and each subject
+## of each variable for each activity and each subject.
         
         RES <- group_by(DS, Subject, Activity)
         RES <- summarise_each(RES, funs(mean))
