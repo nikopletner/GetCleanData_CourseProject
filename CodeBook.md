@@ -5,9 +5,9 @@ wich scritp "run_analysis.R" return
 
 Subject
 
-  Personal ID of person within test group of volunteers.
+\        Personal ID of person within test group of volunteers.
   
-    1..30
+\                1..30
 	
 Activity
 
