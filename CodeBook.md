@@ -1,11 +1,10 @@
-###Code Book for tidy dataset
+####Code Book for tidy dataset
 wich scritp "run_analysis.R" return
 
-####Variables
+#####Variables
 
 Subject
-
-        Personal ID of person within test group of volunteers.
+Personal ID of person within test group of volunteers.
 	
 Activity
 
