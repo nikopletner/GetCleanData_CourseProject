@@ -5,9 +5,10 @@ wich scritp "run_analysis.R" return
 
 Subject
 
-	Personal ID of person within test group of volunteers.
+        Personal ID of person within test group of volunteers.
 	
 Activity
+
 	Name of activity
         
 		WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING
