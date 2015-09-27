@@ -10,6 +10,7 @@
 run_analysis <- function(pathname = "") {
         
         library(dplyr)
+        library(reshape2)
         
 ## 0. Getting data
 
@@ -35,27 +36,26 @@ run_analysis <- function(pathname = "") {
         ext <- sort(c(m, s))
         
         X <- X[, ext]
-        names(X) <- features[ext, 2]
-        
-## 3. Merging activities with dataset and naming the activities in it
+                
+## 3. Merging subjects and activities with dataset and naming the activities in it
 
-        Y <- rbind(ytest, ytrain)
-        A <- actlabels$V2[Y$V1]
-        DS <- cbind(Activity=A, X)
+        Y <- rbind(ytest, ytrain)       # activity numbers
+        S <- rbind(stest, strain)       # subject
+        A <- actlabels$V2[Y$V1]         # activity names
+        DS <- cbind(S, A, X)            # big data set
 
 ## 4. Naming columns (variables) of DataSet
 
-        
-        #DataSet <- DataSet[, c(2, 5, 3, 4)]
-        #names(DataSet) <- c("Subject", "Activity", "Mean", "SD")
-        
+        col_names <- c("Subject", "Activity", as.character(features[ext, 2]))
+        names(DS) <- col_names
+
 ## 5. Creating a second, independent tidy data set with the average 
 ## of each variable for each activity and each subject
         
-        #RES <- group_by(DataSet, Subject, Activity)
-        #RES <- summarize(RES, Average.of.Means = mean(Mean), Average.of.SDs = mean(SD))
+        RES <- group_by(DS, Subject, Activity)
+        RES <- summarise_each(RES, funs(mean))
                 
 ## Result
 
-        DS
+        RES
 }
